@@ -1,0 +1,65 @@
+tr:nth-child(odd){  /*也可以携程tr:nth-of-type(odd)*/
+	background:#CCCCCC;
+}
+th{
+	background-color:#000000;
+	color:#FFFFFF;
+}
+table tr:nth-child(4),tr:nth-child(2),tr:nth-child(3){
+	color:#FF0000;
+}
+.input_1{
+	width: 100px;
+	margin-top: 80px;
+}
+.input_1:focus{
+	width: 200px;
+	transition: 2s;
+	margin-top: 80px;
+}
+#radio1:checked~#pics{
+	left: 0;
+}
+#radio2:checked~#pics{
+	left: -340px;
+}
+#radio3:checked~#pics{
+	left: -640px;
+}
+#buttons {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 10px;
+}
+#radios {
+	position: relative;
+	margin-top: 100px;
+	width: 300px;
+	height: 120px;
+	overflow: hidden;/*overflow 属性规定当内容溢出元素框时发生的事情。其值为hidden时内容会被修剪，并且其余内容是不可见的。*/
+}
+#radios input{
+	display: none;
+}
+#pics {
+	position: absolute;
+	left: 0;
+	width: 900px;
+	height: 120px;
+	transition: 0.8s;
+}
+.pic {
+	float: left;
+	width: 300px;
+	height: 120px;
+	list-style-type: none;/*去掉li前面的圆点*/
+}
+.button{
+	padding: 10px;
+	background-color: #fafafa;
+	color: #aaa;
+	font-weight: bold;
+	font-family: '微软雅黑';
+	opacity: 0.5   /*设置div的不透明级别，从0.0（完全透明）到1.0（完全不透明）*/
+}

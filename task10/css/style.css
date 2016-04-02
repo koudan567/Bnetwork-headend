@@ -1,0 +1,41 @@
+body, div{
+    padding: 0;
+    margin: 0;
+}
+.parent{
+   /* display: -webkit-flex; /* Safari */
+    display: flex;
+    justify-content: space-between;/*项目位于各行之间留有空白的容器内。*/
+    align-items: center;/*使灵活容器内的项目中间对齐*/
+}
+.childs{
+    width: 150px;
+    border: 1px solid #f00;
+    /*padding: 20px;*/
+    margin: 20px;
+}
+
+.c1{
+    height: 120px;
+}
+.c2{
+    height: 100px;
+}
+.c3{
+    height: 40px;
+}
+.c4{
+    border: 1px solid #00f;
+    height: 200px;
+}
+
+@media (max-width: 640px) {
+    .c4{
+        order: -1;
+    }
+
+    .parent{
+        flex-wrap: wrap;/* 规定灵活的项目在必要的时候拆行或拆列。 */
+        align-items: flex-start;/* 项目位于容器的开头。 */
+    }
+}
