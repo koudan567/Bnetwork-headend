@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>表单验证</title>
+<link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<table>
+		<tr>
+			<td>名称</td>
+			<td><input type="text" onfocus="setNameRule(info1)" onblur="validate_name()"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td id="info1"></td>
+		</tr>
+		<tr>
+			<td>密码</td>
+			<td><input type="password" onfocus="setPswRule(info2)" onblur="validate_psw()"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td id="info2"></td>
+		</tr>
+		<tr>
+			<td>密码确认</td>
+			<td><input type="password" onfocus="setRePswRule(info3)" onblur="validate_repsw()"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td id="info3"></td>
+		</tr>
+		<tr>
+			<td>邮箱</td> 
+			<td><input type="text" onfocus="setEmail(info4)" onblur="validate_email()"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td id="info4"></td>
+		</tr>
+		<tr>
+			<td>手机</td>
+			<td><input type="text" onfocus="setEmail(info5)" onblur="validate_phone()"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td id="info5"></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button onclick="validate()">提交</button></td>
+		</tr>
+	</table>
+</body>
+
+<script>
+   /*验证名称*/
+	var inputName = document.getElementsByTagName('input')[0],
+	infoName = document.getElementById('info1');
+	function setNameRule(info1){
+		infoName.innerHTML = "必填，长度为4-16个字符";
+	}
+	function validate_name(){
+		var inputValue=inputName.value;
+		if(countNameLength(inputValue)==0){
+			infoName.innerHTML = "名称不能为空";
+			infoName.style.color = 'red';
+			inputName.style.border = '1px solid red';
+		}else if(countNameLength(inputValue)>=4&&countNameLength(inputValue)<=16){
+			infoName.innerHTML = "名称格式正确";
+			infoName.style.color = 'lightgreen';
+			inputName.style.border = '1px solid lightgreen';
+		}else{
+			infoName.innerHTML = "请输入长度为4-16位字符";
+			infoName.style.color = 'red';
+			inputName.style.border = '1px solid red';
+		}
+		
+	}
+	
+	function countNameLength(str){
+	var inputLength = 0;
+	for(var i=0;i<str.length;i++){
+			var countCode=str.charCodeAt(i);
+			if(countCode>=0&&countCode<=128){
+				inputLength +=1;
+			}else{
+				inputLength +=2;
+			}
+		}
+		return inputLength;
+	}
+	/*验证密码*/
+	var inputPsw = document.getElementsByTagName('input')[1],
+	infoPsw = document.getElementById('info2');
+	function setPswRule(info2){
+		infoPsw.innerHTML = "请输入密码，长度为8-20个字符";
+	}
+	function validate_psw(){
+		var inputValue=inputPsw.value;
+		if(countPswLength(inputValue)==0){
+			infoPsw.innerHTML = "密码不能为空";
+			infoPsw.style.color = 'red';
+			inputPsw.style.border = '1px solid red';
+		}else if(countPswLength(inputValue)>=8&&countPswLength(inputValue)<=20){
+			infoPsw.innerHTML = "密码可用";
+			infoPsw.style.color = 'lightgreen';
+			inputPsw.style.border = '1px solid lightgreen';
+		}else{
+			infoPsw.innerHTML = "请输入长度为8-20个字符的密码";
+			infoPsw.style.color = 'red';
+			inputPsw.style.border = '1px solid red';
+		}
+		
+	}
+	function countPswLength(str){
+	var inputLength = 0;
+	for(var i=0;i<str.length;i++){
+			var countCode=str.charCodeAt(i);
+			if(countCode>=0&&countCode<=128){
+				inputLength +=1;
+			}else{
+				inputLength +=2;
+			}
+		}
+		return inputLength;
+	}
+	/*验证密码确认*/
+	var inputRePsw = document.getElementsByTagName('input')[2],
+	infoRePsw = document.getElementById('info3');
+	function setRePswRule(info3){
+		infoRePsw.innerHTML = "再次输入相同密码";
+	}
+	function validate_repsw(){
+		var inputValue=inputRePsw.value;
+		var pswValue=inputPsw.value;
+		if(inputValue==pswValue){
+		    infoRePsw.innerHTML = "密码输入一致";
+			infoRePsw.style.color = 'lightgreen';
+			inputRePsw.style.border = '1px solid lightgreen';
+		}else{
+			infoRePsw.innerHTML = "密码输入不一致，请重新输入";
+			infoRePsw.style.color = 'red';
+			inputRePsw.style.border = '1px solid red';
+		}
+	}
+	/*验证邮箱*/
+	var inputEmail = document.getElementsByTagName('input')[3],
+	infoEmail = document.getElementById('info4');
+	function setEmail(info4){
+		infoEmail.innerHTML = "请输入正确的邮箱地址";
+	}
+	function validate_email(){
+	var inputValue=inputEmail.value;
+	var emailReg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+	if(emailReg.test(inputValue)){
+	        infoEmail.innerHTML = "邮箱格式正确";
+			infoEmail.style.color = 'lightgreen';
+			inputEmail.style.border = '1px solid lightgreen';
+	}
+	else{
+	        infoEmail.innerHTML = "邮箱格式错误";
+			infoEmail.style.color = 'red';
+			inputEmail.style.border = '1px solid red';
+	}
+	}
+	/*验证手机号码*/
+	var inputPhone = document.getElementsByTagName('input')[4],
+	infoPhone = document.getElementById('info5');
+	function setEmail(info5){
+		infoPhone.innerHTML = "请输入正确的手机号码";
+	}
+	function validate_phone(){
+	var inputValue=inputPhone.value;
+	var phoneReg=/^1[3|4|5|8][0-9]\d{8}$/;
+	if(phoneReg.test(inputValue)){
+	        infoPhone.innerHTML = "手机格式正确";
+			infoPhone.style.color = 'lightgreen';
+			inputPhone.style.border = '1px solid lightgreen';
+	}
+	else{
+	        infoPhone.innerHTML = "手机格式错误";
+			infoPhone.style.color = 'red';
+			inputPhone.style.border = '1px solid red';
+	}
+	}
+	/*验证所有信息是否填写正确*/
+	function validate(){
+	    if((document.getElementById('info1').innerHTML=="名称格式正确")&&(document.getElementById('info2').innerHTML=="密码可用")&&
+		    (document.getElementById('info3').innerHTML=="密码输入一致")&&(document.getElementById('info4').innerHTML=="邮箱格式正确")&&
+			(document.getElementById('info5').innerHTML=="手机格式正确")){
+			   alert("提交成功")
+		}else{
+			alert("信息填写有误，提交失败")
+		}
+	}
+</script>
+</html>

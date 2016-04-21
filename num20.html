@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>任务20</title>
+<style>
+	#contain{
+		margin-top:10px;
+	}
+	.show{
+		border:solid 1px #ccc;
+		background-color:#EE0000;
+		color:white;
+		padding:8px;
+		margin:5px;
+	}
+</style>
+</head>
+<body>
+	<textarea rows="2" cols="15" id="in">aini,爱你 34我；是35</textarea>
+	<input type="button" value="左侧入" id="leftIn">
+	<input type="button" value="右侧入" id="rightIn">
+	<input type="button" value="左侧出" id="leftOut">
+	<input type="button" value="右侧出" id="rightOut">
+	<input type="text" id="search">
+	<input type="button" value="查询" id="select">
+	<div id="contain"></div>
+	<script type="text/javascript">
+	window.onload=function(){
+		var con=document.getElementById("contain"),
+		    btnLI=document.getElementById("leftIn"),
+		    btnRI=document.getElementById("rightIn"),
+		    btnLO=document.getElementById("leftOut"),
+		    btnRO=document.getElementById("rightOut"),
+		    btnSelect=document.getElementById("select"),
+		    put=document.getElementById("in");
+		function addEvent(element,type,handler){
+			if(element.addEventListener){
+				element.addEventListener(type,handler,false);
+			}else if(element.attachEvent){
+				element.attachEvent('on'+type,handler);
+			}else{
+				element['on'+type]=handler;
+			}
+		}
+		
+		function splitData(text){
+			var inputs;
+			inputs=(text).split(/[,，;；、\s\n]+/);
+			return inputs;
+		}
+		
+		function dataRightIn(){
+			var str=put.value;
+			if(str != null){
+				var inputs=splitData(str);
+				for(var i=0; i<inputs.length; i++){
+					var newS=document.createElement("span");
+					newS.innerHTML=inputs[i];
+					newS.className="show";
+					con.appendChild(newS);
+				}
+			}
+		}
+		
+		function dataLeftIn(){
+			var str=put.value;
+			if(str != null){
+				var inputs=splitData(str);
+				for(var i=inputs.length-1; i>=0; i--){
+					var newSpan=document.createElement("span");
+					 newSpan.innerHTML=inputs[i];
+					 newSpan.className="show";
+					con.appendChild(newSpan);
+				}
+			}
+		}
+		
+		function dataLeftOut(){
+			var childs=con.childNodes;
+			if(childs.length == 0){
+				alert("there is no data in the queue");
+			}
+			else{
+				alert("delete the data:"+childs[0].innerHTML);
+				con.removeChild(childs[0]);
+			}
+		}
+		
+		function dataRightOut(){
+			var childs=con.childNodes;
+			if(childs.length == 0){
+				alert("there is no data in the queue");
+			}
+			else{
+				alert("delete the data:"+con.lastChild.innerHTML);
+				con.removeChild(con.lastChild);
+			}
+		}
+		
+		function dataSelect(){
+			var childs=con.childNodes,
+		   		search=document.getElementById("search");
+			if(childs.length == 0){
+				alert("there is no data in the queue");
+			}else if(search.value == ''){
+				alert("there is not search content");
+			}else{
+				for(var i=0; i<childs.length; i++){
+					childs[i].style.color="white";
+				}
+				for(var i=0; i<childs.length; i++){
+					if(childs[i].innerHTML.indexOf(search.value) != -1){
+						childs[i].style.color="blue";
+					}
+				}
+			}
+		}
+		
+		addEvent(btnLI,'click',dataLeftIn);
+		addEvent(btnRI,'click',dataRightIn);
+		addEvent(btnLO,'click',dataLeftOut);
+		addEvent(btnRO,'click',dataRightOut);
+		addEvent(btnSelect,'click',dataSelect);
+	}
+</script>	
+</body>
+</html>

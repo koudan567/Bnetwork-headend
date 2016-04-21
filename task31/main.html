@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>表单联动</title>
+<link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+	<p>选择在校生时，显示学校所在城市选择和学校名称选择表单</p>
+	<p>切换城市时，学校选项随之切换</p>
+	<p>选择非在校生时，显示就业单位选择表单</p>
+	<input name="stu" type="radio" value="student" checked="checked" class="radiobutton">在校生
+	<input name="stu" type="radio" value="notstudent" class="radiobutton">非在校生		
+	 <div id="firstbox">学校
+				<select name="city" id="city" class="selects">
+				   <option value="select">请选择</option>
+				   <option value="beijing">北京</option>
+                   <option value="shanxi">陕西</option>
+				   <option value="sichuan">四川</option>
+                   <option value="shanghai">上海</option>
+			    </select>
+				<select name="college" id="college" class="selects">
+				   <option value="select">请选择</option>
+			    </select>
+		</div>
+		<div id="secondbox"><label for="danwei">就业单位</label>
+          <input id="danwei" type="text" name="danwei"></div>
+
+</body>
+<script>
+    //切换处理
+	var stus = document.getElementsByName('stu');
+	first = document.getElementById('firstbox');
+	second = document.getElementById('secondbox');
+    stus[0].onclick=function(){
+		first.style.display='block';
+		second.style.display='none';
+
+	}
+	stus[1].onclick=function(){
+		first.style.display='none';
+		second.style.display='block';
+	}
+	//数据
+	var data={
+		"beijing":[
+			"北京大学",
+			"清华大学",
+			"北京理工大学"
+			],
+		"shanxi":[
+			"西安交通大学",
+			"西安电子科技大学大学",
+			"西北大学"
+			],
+		"sichuan":[
+			"四川大学",
+			"电子科技大学大学",
+			],
+		"shanghai":[
+			"上海交通大学",
+			"复旦大学",
+			"上海大学"
+			],	
+	};
+	//二级联动的实现
+	var selectBox=document.getElementById('city');
+	var college=document.getElementById('college');
+	selectBox.onchange=function(){
+		var selectedOption = selectBox.options[selectBox.selectedIndex].value;
+		var options;
+		switch(selectedOption){
+			case "beijing":
+				options=data["beijing"];
+				break;
+			case "shanxi":
+			    options=data["shanxi"];
+				break;
+			case "sichuan":
+				options=data["sichuan"];
+				break;
+			case "shanghai":
+			    options=data["shanghai"];
+				break;
+			default:
+		}
+		render(options);
+	}
+	function render(options){
+		college.innerHTML="";
+		var itemsHTML='';
+		for(var i=0;i<options.length;i++){
+		    itemsHTML+='<option>'+options[i]+'</option>';
+			}
+			college.innerHTML=itemsHTML;
+	}
+</script>
+</html>

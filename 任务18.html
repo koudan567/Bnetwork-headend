@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>任务18</title>
+<style>
+	#contain{
+		margin-top:10px;
+	}
+	.show{
+		border:solid 1px #ccc;
+		background-color:#EE0000;
+		color:white;
+		padding:8px;
+		margin:5px;
+	}
+</style>
+</head>
+<body>
+	<input type="text" id="num">
+	<input type="button" value="左侧入" id="leftIn">
+	<input type="button" value="右侧入" id="rightIn">
+	<input type="button" value="左侧出" id="leftOut">
+	<input type="button" value="右侧出" id="rightOut">
+	<div id="contain"></div>
+	<script type="text/javascript">
+	window.onload=function(){
+		var con=document.getElementById("contain"),
+		    btnLI=document.getElementById("leftIn"),
+		    btnRI=document.getElementById("rightIn"),
+		    btnLO=document.getElementById("leftOut"),
+		    btnRO=document.getElementById("rightOut"),
+		    num=document.getElementById("num");
+		function addEvent(element,type,handler){
+			if(element.addEventListener){
+				element.addEventListener(type,handler,false);
+			}else if(element.attachEvent){
+				element.attachEvent('on'+type,handler);
+			}else{
+				element['on'+type]=handler;
+			}
+		}
+		
+		function isData(){
+			if(num.value.length == 0){
+				alert("there is no data");
+				return false;
+			}else if(isNaN(parseInt(num.value))){
+				alert("what you input is not number");
+				return false;
+			}else{
+				return true;
+			}
+		}
+		
+		function dataRightIn(){
+			var newS=document.createElement("span");
+			var is=isData();
+			if(is == true){
+				newS.innerHTML=num.value;
+				newS.className="show";
+				con.appendChild(newS);	
+			}
+		}
+		
+		function dataLeftIn(){
+			var isdata=isData();
+			if(isdata == true){
+				var newSpan=document.createElement("span");
+				 newSpan.innerHTML=num.value;
+				 newSpan.className="show";
+				var childs=con.childNodes;
+				if(childs.length == 0){
+					con.appendChild(newSpan);
+				}
+				else{
+					con.insertBefore(newSpan,childs[0]);
+				}
+			}
+		}
+		
+		function dataLeftOut(){
+			var childs=con.childNodes;
+			if(childs.length == 0){
+				alert("there is no data in the queue");
+			}
+			else{
+				alert("delete the data:"+childs[0].innerHTML);
+				con.removeChild(childs[0]);
+			}
+		}
+		
+		function dataRightOut(){
+			var childs=con.childNodes;
+			if(childs.length == 0){
+				alert("there is no data in the queue");
+			}
+			else{
+				alert("delete the data:"+con.lastChild.innerHTML);
+				con.removeChild(con.lastChild);
+			}
+		}
+		
+		addEvent(btnLI,'click',dataLeftIn);
+		addEvent(btnRI,'click',dataRightIn);
+		addEvent(btnLO,'click',dataLeftOut);
+		addEvent(btnRO,'click',dataRightOut);
+	}
+</script>	
+</body>
+</html>
